@@ -11,7 +11,6 @@ namespace SlipNTrip
     {
         private Label welcomeMessage;
         private Label instructions;
-        private Button bluetoothButton;
         private Button addPatientButton;
         private Button existingPatientsButton;
         private Button deviceControlsButton;
@@ -40,10 +39,6 @@ namespace SlipNTrip
             instructions.Text = "Select Option:";
             instructions.FontSize = 24;
             stackLayout.Children.Add(instructions);
-
-            bluetoothButton = new Button();
-            bluetoothButton.Text = "Bluetooth";
-            stackLayout.Children.Add(bluetoothButton);
             
             addPatientButton = new Button();
             addPatientButton.Text = "Add Patient";
