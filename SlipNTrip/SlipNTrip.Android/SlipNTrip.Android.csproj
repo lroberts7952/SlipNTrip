@@ -54,6 +54,15 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="SkiaSharp">
+      <Version>2.80.3</Version>
+    </PackageReference>
+    <PackageReference Include="SkiaSharp.Views">
+      <Version>2.80.3</Version>
+    </PackageReference>
+    <PackageReference Include="SkiaSharp.Views.Forms">
+      <Version>2.80.3</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
     <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
   </ItemGroup>
@@ -83,7 +92,9 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Three_Dots_Image.png" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SlipNTrip\SlipNTrip.csproj">
       <Project>{442F0810-5B24-41DD-8D15-7FC71E1F536F}</Project>

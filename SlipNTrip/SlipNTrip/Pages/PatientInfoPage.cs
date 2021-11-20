@@ -14,7 +14,9 @@ namespace SlipNTrip
         string dbPatientPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "patients.db3");
         string dbTestResultsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "testResults.db3");
 
-        private Patient patient; 
+        private Patient patient;
+
+        private Label patientIDLabel;
         private Label nameLabel;
         private Label genderLabel;
         private Label ageLabel;
@@ -22,6 +24,7 @@ namespace SlipNTrip
         private Label weightLabel;
         private Label ShoeSizeLabel;
 
+        private Entry patientIDEntry;
         private Entry nameEntry;
         private Entry genderEntry;
         private Entry ageEntry;
@@ -36,7 +39,7 @@ namespace SlipNTrip
         public PatientInfoPage(Patient patient)
         {
             this.patient = patient;
-            this.Title = patient.Name;
+            this.Title = patient.PatientID + ": " + patient.Name;
 
             ToolbarItem helpToolbarItem = new ToolbarItem
             {
@@ -48,6 +51,15 @@ namespace SlipNTrip
             this.ToolbarItems.Add(helpToolbarItem);
 
             StackLayout stackLayout = new StackLayout();
+
+            patientIDLabel = new Label();
+            patientIDLabel.Text = "Patient ID";
+            patientIDLabel.FontSize = 24;
+            stackLayout.Children.Add(patientIDLabel);
+            patientIDEntry = new Entry();
+            patientIDEntry.Placeholder = "M_000";
+            patientIDEntry.Text = patient.PatientID;
+            stackLayout.Children.Add(patientIDEntry);
 
             nameLabel = new Label();
             nameLabel.Text = "Name";
@@ -127,16 +139,18 @@ namespace SlipNTrip
 
         async void UpdateButtonClicked(object sender, EventArgs e)
         {
-            this.Title = nameEntry.Text;
+            this.Title = patientIDEntry.Text + ": " + nameEntry.Text;
             var db = new SQLiteConnection(dbPatientPath);
           
-            if (!string.IsNullOrWhiteSpace(nameEntry.Text) && !string.IsNullOrWhiteSpace(ageEntry.Text) && 
-                !string.IsNullOrWhiteSpace(heightEntry.Text) && !string.IsNullOrWhiteSpace(genderEntry.Text)
-                && !string.IsNullOrWhiteSpace(weightEntry.Text) && !string.IsNullOrWhiteSpace(shoeSizeEntry.Text))
+            if (!string.IsNullOrWhiteSpace(patientIDEntry.Text) && !string.IsNullOrWhiteSpace(nameEntry.Text) 
+                && !string.IsNullOrWhiteSpace(ageEntry.Text) && !string.IsNullOrWhiteSpace(heightEntry.Text) 
+                && !string.IsNullOrWhiteSpace(genderEntry.Text) && !string.IsNullOrWhiteSpace(weightEntry.Text) 
+                && !string.IsNullOrWhiteSpace(shoeSizeEntry.Text))
             {
                 Patient patient = new Patient()
                 {
                     ID = this.patient.ID,
+                    PatientID = patientIDEntry.Text,
                     Name = nameEntry.Text,
                     Gender = genderEntry.Text,
                     Age = int.Parse(ageEntry.Text),

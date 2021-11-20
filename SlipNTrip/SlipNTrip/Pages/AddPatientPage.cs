@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-
 using Xamarin.Forms;
 using SQLite;
 
@@ -13,6 +12,7 @@ namespace SlipNTrip
     {
         string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "patients.db3");
 
+        private Label patientIDLabel;
         private Label nameLabel;
         private Label genderLabel;
         private Label ageLabel;
@@ -20,6 +20,7 @@ namespace SlipNTrip
         private Label weightLabel;
         private Label ShoeSizeLabel;
 
+        private Entry patientIDEntry;
         private Entry nameEntry;
         private Entry genderEntry;
         private Entry ageEntry;
@@ -43,6 +44,14 @@ namespace SlipNTrip
             this.ToolbarItems.Add(helpToolbarItem);
 
             StackLayout stackLayout = new StackLayout();
+
+            patientIDLabel = new Label();
+            patientIDLabel.Text = "Patient ID";
+            patientIDLabel.FontSize = 24;
+            stackLayout.Children.Add(patientIDLabel);
+            patientIDEntry = new Entry();
+            patientIDEntry.Placeholder = "M_000";
+            stackLayout.Children.Add(patientIDEntry);
 
             nameLabel = new Label();
             nameLabel.Text = "Name";
@@ -110,12 +119,20 @@ namespace SlipNTrip
             var db = new SQLiteConnection(dbPath);
             db.CreateTable<Patient>();
 
-            if (!string.IsNullOrWhiteSpace(nameEntry.Text) && !string.IsNullOrWhiteSpace(genderEntry.Text) 
+            if (!string.IsNullOrWhiteSpace(patientIDEntry.Text) && !string.IsNullOrWhiteSpace(nameEntry.Text)
                 && !string.IsNullOrWhiteSpace(ageEntry.Text) && !string.IsNullOrWhiteSpace(heightEntry.Text)
-                && !string.IsNullOrWhiteSpace(weightEntry.Text) && !string.IsNullOrWhiteSpace(shoeSizeEntry.Text))
+                && !string.IsNullOrWhiteSpace(genderEntry.Text) && !string.IsNullOrWhiteSpace(weightEntry.Text)
+                && !string.IsNullOrWhiteSpace(shoeSizeEntry.Text))
             {
+                var tempPatientID = db.Query<Patient>("SELECT PatientID FROM Patient");
+                if(tempPatientID != null)
+                {
+                    await DisplayAlert("Hallo", "SUCCESS?", "Done");
+                    await Navigation.PushAsync(new Pages.DatabaseQuery());
+                }
                 Patient patient = new Patient()
                 {
+                    PatientID = patientIDEntry.Text,
                     Name = nameEntry.Text,
                     Gender = genderEntry.Text,
                     Age = int.Parse(ageEntry.Text),
@@ -125,7 +142,6 @@ namespace SlipNTrip
                 };
 
                 db.Insert(patient);
-
                 await Navigation.PushAsync(new TestPage(patient));
             }
             else
@@ -134,7 +150,7 @@ namespace SlipNTrip
 
         void helpButtonClicked(object sender, EventArgs e)
         {
-            string helpMessage = "Input the patients name, age, gender, weight, height and shoe size\n" +
+            string helpMessage = "Input the patient's ID, name, age, gender, weight, height and shoe size\n" +
                 "Gender: Female, Male, Other??\n" +
                 "Weight: Measured in lb\n" +
                 "Height: Measured in ft";

@@ -223,7 +223,7 @@ namespace SlipNTrip
                         PatientName = patient.Name,
                         PatientID = patient.ID,
                         TestName = testEntry.Text,
-                        Date = DateTime.Today,
+                        Date = DateTime.Now,
                         Direction = directionEntry.Text,
                         Distance = double.Parse(distanceEntry.Text),
                         MotorSpeed = double.Parse(velocityEntry.Text),

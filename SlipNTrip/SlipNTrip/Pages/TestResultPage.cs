@@ -16,6 +16,11 @@ namespace SlipNTrip.Pages
         private TestResults testResults;
         private Boolean buttonLayout;
 
+        private int arraySize = 11;
+        private double[,] startingLocationArray;
+        private double[,] endingLocationArray;
+
+        private Label patientID;
         private Label patientName;
         private Label testName;
         private Label testDate;
@@ -31,6 +36,7 @@ namespace SlipNTrip.Pages
         private Label timeBetweenStep;
         private Label distanceBetweenStep;
 
+        private Button steppingSurfaceGraphicButton;
         private Button saveButton;
         private Button newTestButton;
         private Button homeButton;
@@ -42,7 +48,11 @@ namespace SlipNTrip.Pages
             this.patient = patient;
             this.testResults = testResults;
             this.buttonLayout = buttonLayout;
-            this.Title = patient.Name + ": " + testResults.TestName;
+            this.Title = patient.PatientID + ": " + patient.Name + " - " + testResults.TestName;
+
+            startingLocationArray = new double[arraySize, arraySize];
+            endingLocationArray = new double[arraySize, arraySize];
+            generateArray(); // For Testing
 
             ToolbarItem helpToolbarItem = new ToolbarItem
             {
@@ -54,9 +64,14 @@ namespace SlipNTrip.Pages
             this.ToolbarItems.Add(helpToolbarItem);
 
             StackLayout stackLayout = new StackLayout();
-            
+
+            patientID = new Label();
+            patientID.Text = "Patient ID: " + patient.ID;
+            patientID.FontSize = 24;
+            stackLayout.Children.Add(patientID);
+
             patientName = new Label();
-            patientName.Text = "Patient: " + patient.Name;
+            patientName.Text = "Patient Name: " + patient.Name;
             patientName.FontSize = 24;
             stackLayout.Children.Add(patientName);
 
@@ -125,6 +140,11 @@ namespace SlipNTrip.Pages
             distanceBetweenStep.FontSize = 24;
             stackLayout.Children.Add(distanceBetweenStep);
 
+            steppingSurfaceGraphicButton = new Button();
+            steppingSurfaceGraphicButton.Text = "View Patient's Location on Device";
+            steppingSurfaceGraphicButton.Clicked += steppingSurfaceGraphicButtonClicked;
+            stackLayout.Children.Add(steppingSurfaceGraphicButton);
+
             saveButton = new Button();
             saveButton.Text = "Save";
             saveButton.Clicked += SaveButtonCLicked;
@@ -167,6 +187,11 @@ namespace SlipNTrip.Pages
             
             Content = stackLayout;
             //ScrollView scrollView = new ScrollView { Content = stackLayout };
+        }
+
+        async void steppingSurfaceGraphicButtonClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new Pages.SSGraphicPage(startingLocationArray, endingLocationArray));
         }
 
         async void SaveButtonCLicked(object sender, EventArgs e)
@@ -245,6 +270,27 @@ namespace SlipNTrip.Pages
             else
             {
                 DisplayAlert("Help - Test Results Page", helpMessage1, "Done");
+            }
+        }
+
+        // For Testing
+        private void generateArray()
+        {
+            Random rnd = new Random();
+            for (int x = 0; x < arraySize; x++)
+            {
+                for (int y = 0; y < arraySize; y++)
+                {
+                    startingLocationArray[x, y] = rnd.Next(0, 1000);
+                }
+            }
+
+            for (int x = 0; x < arraySize; x++)
+            {
+                for (int y = 0; y < arraySize; y++)
+                {
+                    endingLocationArray[x, y] = rnd.Next(0, 1000);
+                }
             }
         }
     }

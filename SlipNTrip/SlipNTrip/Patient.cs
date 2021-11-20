@@ -9,6 +9,7 @@ namespace SlipNTrip
     {
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
+        public string PatientID { get; set; }
         public string Name { get; set; }
         public string Gender { get; set; }
         public int Age { get; set; }
@@ -18,7 +19,7 @@ namespace SlipNTrip
 
         public override string ToString()
         {
-            return this.Name;
+            return this.PatientID;
         }
     }
 

@@ -42,7 +42,7 @@ namespace SlipNTrip
             if(results.Count > 0)
             {
                 PatientListView = new ListView();
-                PatientListView.ItemsSource = db.Table<Patient>().OrderBy(x => x.Name).ToList();
+                PatientListView.ItemsSource = db.Table<Patient>().OrderBy(x => x.PatientID).ToList();
                 PatientListView.ItemSelected += listView_ItemSelected;
                 PatientListView.BackgroundColor = Color.White;
                 stackLayout.Children.Add(PatientListView);

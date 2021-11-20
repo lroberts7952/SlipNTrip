@@ -11,7 +11,10 @@ namespace SlipNTrip
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new LoginPage());
+            MainPage = new NavigationPage(new LoginPage())
+            {
+                BarBackgroundColor = Color.Red
+            };
         }
 
         protected override void OnStart()

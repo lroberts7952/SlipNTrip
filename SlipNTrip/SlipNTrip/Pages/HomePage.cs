@@ -80,8 +80,7 @@ namespace SlipNTrip
 
         void helpButtonClicked(object sender, EventArgs e)
         {
-            string helpMessage = "Bluetooth: Check bluetooth connection to Slip N Trip V2 Device\n" +
-                "Add Patient: Add new patient into database\n" +
+            string helpMessage = "Add Patient: Add new patient into database\n" +
                 "Existing Patients: View patients added into database\n" +
                 "Device Controls: Access the input parameters for device without needing a patient (Used for maintenance/testing)";
             DisplayAlert("Help - Home Page", helpMessage, "Done");
