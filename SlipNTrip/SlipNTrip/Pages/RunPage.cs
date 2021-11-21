@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace SlipNTrip.Pages
@@ -22,8 +22,8 @@ namespace SlipNTrip.Pages
             ImageButton emergancyStopButton = new ImageButton
             {
                 Source = "Emergency_Stop.png",
-                //HeightRequest = 100,
-                //WidthRequest = 100,
+                //HeightRequest = ,
+                WidthRequest = DeviceDisplay.MainDisplayInfo.Width,
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.CenterAndExpand
             };
