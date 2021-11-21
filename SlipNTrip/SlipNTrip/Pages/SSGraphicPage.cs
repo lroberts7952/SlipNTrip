@@ -31,7 +31,7 @@ namespace SlipNTrip.Pages
 
         public SSGraphicPage(double[,] startingLocationArray, double[,] endingLocationArray)
         {
-            Title = "Patient's Location on Device";
+            //Title = "Patient's Location on Device";
             this.startingLocationArray = startingLocationArray;
             this.endingLocationArray = endingLocationArray;
             strStartLocation = "Starting Location";
@@ -41,9 +41,10 @@ namespace SlipNTrip.Pages
 
             ToolbarItem locationToolbarItem = new ToolbarItem
             {
-                IconImageSource = ImageSource.FromFile("Three_Dots_Image.png"),
+                Text = "Patient's Location on Device",
+                //IconImageSource = ImageSource.FromFile("Three_Dots_Image3.png"),
                 Order = ToolbarItemOrder.Primary,
-                Priority = 0
+                Priority = 0,
             };
             locationToolbarItem.Clicked += locationToolbarItemClicked;
             this.ToolbarItems.Add(locationToolbarItem);

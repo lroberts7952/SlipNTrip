@@ -46,6 +46,7 @@ namespace SlipNTrip
             loginButton.Clicked += OnLoginButtonClicked;
             stackLayout.Children.Add(loginButton);
 
+            ConnectionAlert();
             Content = stackLayout;
         }
 
@@ -53,11 +54,23 @@ namespace SlipNTrip
         {
             if(!string.IsNullOrWhiteSpace(usernameEntry.Text) && !string.IsNullOrWhiteSpace(passwordEntry.Text))
             {
-                await Navigation.PushAsync(new HomePage());
+                if(usernameEntry.Text.Equals("lmro239") && passwordEntry.Text.Equals("defyingGravity"))
+                {
+                    await Navigation.PushAsync(new HomePage());
+                }
+                else
+                {
+                    await DisplayAlert("Login Error", "Incorrect Username or Password", "Done");
+                }
             }
 
             else
                 await DisplayAlert("Login Error", "One or more fields missing information", "Done");
+        }
+
+        async void ConnectionAlert()
+        {
+            await DisplayAlert("Connection Error", "Check Wi-Fi Networ in Settings \n Correct Network: ", "Done");
         }
     }
 }

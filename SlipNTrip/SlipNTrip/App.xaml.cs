@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SlipNTrip.Pages;
+using System;
 using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -11,14 +12,12 @@ namespace SlipNTrip
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new LoginPage())
-            {
-                BarBackgroundColor = Color.Red
-            };
+            MainPage = new NavigationPage(new RunPage());
         }
 
         protected override void OnStart()
         {
+            
         }
 
         protected override void OnSleep()

@@ -14193,7 +14193,7 @@ namespace SlipNTrip.Droid
 			public const int design_snackbar_background = 2131165292;
 			
 			// aapt resource value: 0x7F07006D
-			public const int Help_Icon = 2131165293;
+			public const int Emergency_Stop = 2131165293;
 			
 			// aapt resource value: 0x7F07006E
 			public const int ic_mtrl_checked_circle = 2131165294;
@@ -14301,10 +14301,16 @@ namespace SlipNTrip.Droid
 			public const int Three_Dots_Image = 2131165328;
 			
 			// aapt resource value: 0x7F070091
-			public const int tooltip_frame_dark = 2131165329;
+			public const int Three_Dots_Image2 = 2131165329;
 			
 			// aapt resource value: 0x7F070092
-			public const int tooltip_frame_light = 2131165330;
+			public const int Three_Dots_Image3 = 2131165330;
+			
+			// aapt resource value: 0x7F070093
+			public const int tooltip_frame_dark = 2131165331;
+			
+			// aapt resource value: 0x7F070094
+			public const int tooltip_frame_light = 2131165332;
 			
 			static Drawable()
 			{
