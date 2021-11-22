@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SlipNTrip.Pages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -66,7 +67,7 @@ namespace SlipNTrip.Pages
             StackLayout stackLayout = new StackLayout();
 
             patientID = new Label();
-            patientID.Text = "Patient ID: " + patient.ID;
+            patientID.Text = "Patient ID: " + patient.PatientID;
             patientID.FontSize = 24;
             stackLayout.Children.Add(patientID);
 
@@ -191,7 +192,7 @@ namespace SlipNTrip.Pages
 
         async void steppingSurfaceGraphicButtonClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new Pages.SSGraphicPage(startingLocationArray, endingLocationArray));
+            await Navigation.PushAsync(new SSGraphicPage(startingLocationArray, endingLocationArray));
         }
 
         async void SaveButtonCLicked(object sender, EventArgs e)

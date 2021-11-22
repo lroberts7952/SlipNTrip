@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SlipNTrip.Pages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -119,17 +120,22 @@ namespace SlipNTrip
             var db = new SQLiteConnection(dbPath);
             db.CreateTable<Patient>();
 
-            if (!string.IsNullOrWhiteSpace(patientIDEntry.Text) && !string.IsNullOrWhiteSpace(nameEntry.Text)
+            if (patientIDEntry.Text.Equals("M_001"))
+            {
+                await DisplayAlert("Add Patient Error", "Patient ID Exist", "Done");
+            }
+            else if (!string.IsNullOrWhiteSpace(patientIDEntry.Text) && !string.IsNullOrWhiteSpace(nameEntry.Text)
                 && !string.IsNullOrWhiteSpace(ageEntry.Text) && !string.IsNullOrWhiteSpace(heightEntry.Text)
                 && !string.IsNullOrWhiteSpace(genderEntry.Text) && !string.IsNullOrWhiteSpace(weightEntry.Text)
                 && !string.IsNullOrWhiteSpace(shoeSizeEntry.Text))
             {
-                var tempPatientID = db.Query<Patient>("SELECT PatientID FROM Patient");
-                if(tempPatientID != null)
+                //var tempPatientID = db.Query<Patient>("SELECT PatientID FROM Patient");
+                
+                /*if(tempPatientID != null)
                 {
                     await DisplayAlert("Hallo", "SUCCESS?", "Done");
-                    await Navigation.PushAsync(new Pages.DatabaseQuery());
-                }
+                    await Navigation.PushAsync(new DatabaseQuery());
+                }*/
                 Patient patient = new Patient()
                 {
                     PatientID = patientIDEntry.Text,

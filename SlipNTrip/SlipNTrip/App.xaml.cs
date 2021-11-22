@@ -12,7 +12,7 @@ namespace SlipNTrip
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new RunPage());
+            MainPage = new NavigationPage(new LoginPage());
         }
 
         protected override void OnStart()

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SlipNTrip.Pages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,9 @@ namespace SlipNTrip
 
         public HomePage()
         {
+            ListofPatients listofPatients = new ListofPatients();
+            listofPatients.GenerateListofPatients();
+
             ToolbarItem helpToolbarItem = new ToolbarItem
             {
                 Text = "?",
@@ -75,7 +79,17 @@ namespace SlipNTrip
 
         async void OnDeviceControlsButtonClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new DeviceControlsPage());
+            Patient patient = new Patient
+            {
+                PatientID = "N/A",
+                Name = "N/A",
+                Gender = "N/A",
+                Age = 0,
+                Height = 0.0,
+                Weight = 0.0,
+                ShoeSize = 0.0
+            };
+            await Navigation.PushAsync(new DeviceControlsPage(patient));
         }
 
         void helpButtonClicked(object sender, EventArgs e)

@@ -1,4 +1,5 @@
-﻿using SkiaSharp;
+﻿using SlipNTrip.Pages;
+using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using System;
 using System.Collections.Generic;
@@ -100,36 +101,42 @@ namespace SlipNTrip.Pages
             float xText = info.Width / 2 - textBounds.MidX;
 
             // And draw the text
-            canvas.DrawText(paintTitle, xText, 50, textPaint);
+            canvas.DrawText(paintTitle, xText, 150, textPaint);
           
             // Paint Color for Grid Lines
             paint.Style = SKPaintStyle.Stroke;
             paint.Color = SKColors.Gray;
             paint.StrokeWidth = 10;
-            
+
+            //Coordinate Values
+            int numLines = 7;
+            int yStartingCordinate = 300;
+            int yEndingCorrdinate = yStartingCordinate;
+            int xStartingCorrdinate = 25;
+            int xEndingCorrdinate = xStartingCorrdinate + (numLines - 1) * 100;
+
             //Horizontal Lines
-            int yCorrdinate = 100;
-            for(int i = 0; i < 13; i++)
+            for (int i = 0; i < 13; i++)
             {
-                canvas.DrawLine(25, yCorrdinate, 1225, yCorrdinate, paint);
-                yCorrdinate += 100;
+                canvas.DrawLine(xStartingCorrdinate, yEndingCorrdinate, 1225, yEndingCorrdinate, paint);
+                yEndingCorrdinate += 100;
             }
 
             //Vertical Lines
-            int xCorrdinate = 25;
+            xEndingCorrdinate = xStartingCorrdinate;
             for (int i = 0; i < 13; i++)
             {
-                canvas.DrawLine(xCorrdinate, 100, xCorrdinate, yCorrdinate-100, paint);
-                xCorrdinate += 100;
+                canvas.DrawLine(xEndingCorrdinate, yStartingCordinate, xEndingCorrdinate, yEndingCorrdinate - 100, paint);
+                xEndingCorrdinate += 100;
             }
 
             paint.Style = SKPaintStyle.Fill;
             paint.Color = SKColors.Red;
 
             int xArrayLocation = 0;
-            for (int x = 125; x < 1225; x += 100) {
+            for (int x = xStartingCorrdinate + 100; x < xEndingCorrdinate - 100; x += 100) {
                 int yArrayLocation = 0;
-                for (int y = 200; y < yCorrdinate - 100; y += 100)
+                for (int y = yStartingCordinate + 100; y < yEndingCorrdinate - 100; y += 100)
                 {
                     if (paintArray[xArrayLocation,yArrayLocation] > minDarkRed)
                     {
