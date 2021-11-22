@@ -71,7 +71,7 @@ namespace SlipNTrip
 
         async void ConnectionAlert()
         {
-            await DisplayAlert("Connection Error", "Check Wi-Fi Networ in Settings \n Correct Network: ", "Done");
+            await DisplayAlert("Connection Error", "Check Wi-Fi Networ in Settings \n Correct Network: defying_gravity_AP \n Password: 123456789", "Done");
         }
     }
 }
