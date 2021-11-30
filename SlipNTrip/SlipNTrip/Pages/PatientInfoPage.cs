@@ -17,6 +17,11 @@ namespace SlipNTrip
 
         private Patient patient;
 
+        private int maxAge = 120;
+        private int maxHeight = 8;  //feet
+        private int maxWeight = 300; // lb
+        private int maxShoeSize = 15; //US Shoe Size
+
         private Label patientIDLabel;
         private Label nameLabel;
         private Label genderLabel;
@@ -154,24 +159,44 @@ namespace SlipNTrip
                     PatientID = patientIDEntry.Text,
                     Name = nameEntry.Text,
                     Gender = genderEntry.Text,
-                    Age = int.Parse(ageEntry.Text),
+                    Age = double.Parse(ageEntry.Text),
                     Height = double.Parse(heightEntry.Text),
                     Weight = double.Parse(weightEntry.Text),
                     ShoeSize = double.Parse(shoeSizeEntry.Text)
                 };
 
-                db.Update(patient);
+                if (!patient.isAgeWithinRange())
+                {
+                    await DisplayAlert("Patient Information: Error", "Invalid entry for age", "Done");
+                }
+                else if (!patient.isHeightWithinRange())
+                {
+                    await DisplayAlert("Patient Information: Error", "Invalid entry for height", "Done");
+                }
+                else if (!patient.isWeightWithinRange())
+                {
+                    await DisplayAlert("Patient Information: Error", "Invalid entry for weight", "Done");
+                }
+                else if (!patient.isShoeSizeWithinRange())
+                {
+                    await DisplayAlert("Patient Information: Error", "Invalid entry for shoe size", "Done");
+                }
+                else
+                {
+                    await DisplayAlert("Patient Infomation: Updated", "Update Successful", "Done");
+                    db.Update(patient);
+                }
             }
 
             else
-                await DisplayAlert("Patient Info", "One or more fields missing information", "Done");
+                await DisplayAlert("Patient Infomation: Error", "One or more fields missing information", "Done");
         }
 
         async void DeleteButtonClicked(object sender, EventArgs e)
         {
             var dbPatient = new SQLiteConnection(dbPatientPath);
             var dbTestResults = new SQLiteConnection(dbTestResultsPath);
-            bool response = await DisplayAlert("Delete: Patient", "Are you sure you would like to delete the patient?", "Yes", "No");
+            bool response = await DisplayAlert("Patient Information: Delete", "Are you sure you would like to delete the patient?", "Yes", "No");
             if (response)
             {
                 dbPatient.Table<Patient>().Delete(x => x.ID == this.patient.ID);

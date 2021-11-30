@@ -157,7 +157,7 @@ namespace SlipNTrip
                             TimeBetweenStep = 0.0,
                             DistanceBetweenStep = 0.0
                         };
-                        await Navigation.PushAsync(new TestResultPage(patient, testResults, false));
+                        await Navigation.PushAsync(new RunPage(patient, testResults, false));
                     }
                 }
                 else
@@ -179,7 +179,7 @@ namespace SlipNTrip
                         TimeBetweenStep = 0.0,
                         DistanceBetweenStep = 0.0
                     };
-                    await Navigation.PushAsync(new TestResultPage(patient, testResults, false));
+                    await Navigation.PushAsync(new RunPage(patient, testResults, false));
                 }
                 else
                     await DisplayAlert("Device Controls Error", "One or more fields missing information", "Done");

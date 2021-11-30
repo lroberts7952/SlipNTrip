@@ -13,6 +13,8 @@ namespace SlipNTrip
     {
         string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "patients.db3");
 
+        private int buttonSize = 45;
+       
         private Label patientIDLabel;
         private Label nameLabel;
         private Label genderLabel;
@@ -108,6 +110,7 @@ namespace SlipNTrip
 
             saveButton = new Button();
             saveButton.Text = "Save";
+            saveButton.FontSize = buttonSize;
             saveButton.Clicked += OnButtonClicked;
             stackLayout.Children.Add(saveButton);
 
@@ -120,11 +123,7 @@ namespace SlipNTrip
             var db = new SQLiteConnection(dbPath);
             db.CreateTable<Patient>();
 
-            if (patientIDEntry.Text.Equals("M_001"))
-            {
-                await DisplayAlert("Add Patient Error", "Patient ID Exist", "Done");
-            }
-            else if (!string.IsNullOrWhiteSpace(patientIDEntry.Text) && !string.IsNullOrWhiteSpace(nameEntry.Text)
+            if (!string.IsNullOrWhiteSpace(patientIDEntry.Text) && !string.IsNullOrWhiteSpace(nameEntry.Text)
                 && !string.IsNullOrWhiteSpace(ageEntry.Text) && !string.IsNullOrWhiteSpace(heightEntry.Text)
                 && !string.IsNullOrWhiteSpace(genderEntry.Text) && !string.IsNullOrWhiteSpace(weightEntry.Text)
                 && !string.IsNullOrWhiteSpace(shoeSizeEntry.Text))
@@ -141,25 +140,49 @@ namespace SlipNTrip
                     PatientID = patientIDEntry.Text,
                     Name = nameEntry.Text,
                     Gender = genderEntry.Text,
-                    Age = int.Parse(ageEntry.Text),
+                    Age = double.Parse(ageEntry.Text),
                     Height = double.Parse(heightEntry.Text),
                     Weight = double.Parse(weightEntry.Text),
                     ShoeSize = double.Parse(shoeSizeEntry.Text)
                 };
 
-                db.Insert(patient);
-                await Navigation.PushAsync(new TestPage(patient));
+                if (!patient.isAgeWithinRange())
+                {
+                    await DisplayAlert("Add Patient: Error", "Invalid entry for age", "Done");
+                }
+                else if (!patient.isHeightWithinRange())
+                {
+                    await DisplayAlert("Add Patient: Error", "Invalid entry for height", "Done");
+                }
+                else if (!patient.isWeightWithinRange())
+                {
+                    await DisplayAlert("Add Patient: Error", "Invalid entry for weight", "Done");
+                }
+                else if (!patient.isShoeSizeWithinRange())
+                {
+                    await DisplayAlert("Add Patient: Error", "Invalid entry for shoe size", "Done");
+                }
+                else
+                {
+                    db.Insert(patient);
+                    bool response = await DisplayAlert("Add Patient: Added", "Patient successfully added", "Done", "Next");
+                    if(!response)
+                    {
+                        await Navigation.PushAsync(new TestPage(patient));
+                    }
+                }
             }
             else
-                await DisplayAlert("Add Patient Error", "One or more fields missing information", "Done");
+                await DisplayAlert("Add Patient: Error", "One or more fields missing information", "Done");
         }
 
         void helpButtonClicked(object sender, EventArgs e)
         {
-            string helpMessage = "Input the patient's ID, name, age, gender, weight, height and shoe size\n" +
-                "Gender: Female, Male, Other??\n" +
-                "Weight: Measured in lb\n" +
-                "Height: Measured in ft";
+            string helpMessage = "Purpose: Input the patient's ID, name, age, gender, weight, height and shoe size\n" +
+                "Gender: Female, Male, Decline to State\n" +
+                "Weight: Measured in pounds (lb)\n" +
+                "Height: Measured in feet and inches (ft.in)\n" +
+                "Shoe Size: Uses the US Shoe Size";
             DisplayAlert("Help - Add Patient Page", helpMessage, "Done");
         }
     } 

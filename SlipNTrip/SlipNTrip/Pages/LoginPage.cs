@@ -35,15 +35,18 @@ namespace SlipNTrip
 
             usernameEntry = new Entry();
             usernameEntry.Placeholder = "Username";
+            usernameEntry.FontSize = 45;
             stackLayout.Children.Add(usernameEntry);
 
             passwordEntry = new Entry();
             passwordEntry.Placeholder = "Password";
+            passwordEntry.FontSize = 45;
             stackLayout.Children.Add(passwordEntry);
 
             loginButton = new Button();
             loginButton.Text = "Login";
             loginButton.CornerRadius = 5;
+            loginButton.FontSize = 45;
             loginButton.Clicked += OnLoginButtonClicked;
             stackLayout.Children.Add(loginButton);
 

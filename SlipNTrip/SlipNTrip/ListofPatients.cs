@@ -39,6 +39,9 @@ namespace SlipNTrip
                                     "Max Richards","Dale Baker","Kelsey Robinson","Brooke Riley","Adrian Cunningham",
                                     "Oliver Stevens","Abigail Adams","Paul Perry","Chelsea Roberts","Michael Miller",
                                     "James Hunt","Valeria Hill","Kristian Williams","Victoria Anderson","Gianna Alexander"};
+            double[] decimalArray = { 0, 0.5, 0, 0.5 };
+            double[] heightDecimalArray = { 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.10, 0.11 };
+
             string tempPatientID;
             for (int i = 0; i < 50; i++)
             {
@@ -54,9 +57,9 @@ namespace SlipNTrip
                     Name = patientName[i],
                     Gender = patientGender[i],
                     Age = rnd.Next(50, 80),
-                    Height = Math.Round(rnd.Next(5,6) + rnd.NextDouble(), 1),
-                    Weight = Math.Round(rnd.Next(120, 300) + rnd.NextDouble(),2),
-                    ShoeSize = Math.Round(rnd.Next(6,12) + rnd.NextDouble(),1)
+                    Height = rnd.Next(5,6) + heightDecimalArray[rnd.Next(0,11)],
+                    Weight = rnd.Next(120, 300) + decimalArray[rnd.Next(0, 3)],
+                    ShoeSize = rnd.Next(6,12) + decimalArray[rnd.Next(0, 3)]
                 };
 
                 db.Insert(patient);
