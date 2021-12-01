@@ -33,11 +33,20 @@ namespace SlipNTrip
             newTestToolbarItem.Clicked += newTestButtonClicked;
             this.ToolbarItems.Add(newTestToolbarItem);
 
+            ToolbarItem homeToolbarItem = new ToolbarItem
+            {
+                Text = "Home\t",
+                Order = ToolbarItemOrder.Primary,
+                Priority = 1
+            };
+            homeToolbarItem.Clicked += homeToolbarItemClicked;
+            this.ToolbarItems.Add(homeToolbarItem);
+
             ToolbarItem helpToolbarItem = new ToolbarItem
             {
                 Text = "?",
                 Order = ToolbarItemOrder.Primary,
-                Priority = 1
+                Priority = 2
             };
             helpToolbarItem.Clicked += helpButtonClicked;
             this.ToolbarItems.Add(helpToolbarItem);
@@ -45,7 +54,7 @@ namespace SlipNTrip
             StackLayout stackLayout = new StackLayout();
 
             SearchBar searchBar = new SearchBar { Placeholder = "Search items..." };
-            //searchBar.TextChanged += OnTextChanged;
+            searchBar.TextChanged += OnTextChanged;
             stackLayout.Children.Add(searchBar);
 
             var tableInfo = db.GetTableInfo("TestResults");
@@ -60,9 +69,21 @@ namespace SlipNTrip
             Content = stackLayout;
         }
 
+        private void OnTextChanged(object sender, EventArgs e)
+        {
+            var db = new SQLiteConnection(dbPath);
+            SearchBar searchBar = (SearchBar)sender;
+            testResultsListView.ItemsSource = db.Table<TestResults>().Where(x => x.TestName.Contains(searchBar.Text)).ToList();
+        }
+
         async void newTestButtonClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new DeviceControlsPage(patient));
+        }
+
+        async void homeToolbarItemClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new HomePage());
         }
 
         private void listView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

@@ -55,7 +55,8 @@ namespace SlipNTrip.Pages
         async void emergencyStopClicked(object sender, EventArgs e)
         {
             await DisplayAlert("Emergency Stop", "Emergency Stop Engaged", "Done");
-            await Navigation.PushAsync(new DeviceControlsPage(patient));
+            await Navigation.PushAsync(new TestResultPage(patient, testResults, false));
+            //await Navigation.PushAsync(new DeviceControlsPage(patient));
         }
         
         async void navigateToTestPage()

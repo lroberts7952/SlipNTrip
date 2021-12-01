@@ -53,11 +53,20 @@ namespace SlipNTrip.Pages
             locationToolbarItem.Clicked += locationToolbarItemClicked;
             this.ToolbarItems.Add(locationToolbarItem);
 
+            ToolbarItem keyToolbarItem = new ToolbarItem
+            {
+                Text = "Color Key\t",
+                Order = ToolbarItemOrder.Primary,
+                Priority = 1,
+            };
+            keyToolbarItem.Clicked += keyToolbarItemClicked;
+            this.ToolbarItems.Add(keyToolbarItem);
+
             ToolbarItem helpToolbarItem = new ToolbarItem
             {
                 Text = "?",
                 Order = ToolbarItemOrder.Primary,
-                Priority = 1
+                Priority = 2
             };
             helpToolbarItem.Clicked += helpToolbarItemClicked;
             this.ToolbarItems.Add(helpToolbarItem);
@@ -179,13 +188,19 @@ namespace SlipNTrip.Pages
             }
         }
 
+        async void keyToolbarItemClicked(object sender, EventArgs e)
+        {
+            string keyMessage = "This will display an image of the key explaining the colors";
+            await DisplayAlert("Patient's Location on Device: Color Key", keyMessage, "Done");
+        }
+
         async void helpToolbarItemClicked(object sender, EventArgs e)
         {
             string helpMessage = "Purpose: To display patient's location on device\n" +
                 "Meaning of Colors: \n" +
                 "\tDifferent shades of Red: Where pressure \n \t \tis applied; Darker the shade, the more \n \t \tpressure is applied\n" +
                 "\tGreen: No pressure is applied";
-            await DisplayAlert("Help - Patient's Location on Device", helpMessage, "Done", "View Key (Visual");
+            await DisplayAlert("Help - Patient's Location on Device", helpMessage, "Done");
         }
     }
 }

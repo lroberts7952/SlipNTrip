@@ -53,9 +53,8 @@ namespace SlipNTrip.Pages
             this.buttonLayout = buttonLayout;
             this.Title = patient.PatientID + ": " + patient.Name + " - " + testResults.TestName;
 
-            startingLocationArray = new double[arraySize, arraySize];
-            endingLocationArray = new double[arraySize, arraySize];
-            generateArray(); // For Testing
+            //generateArray_1(); // For Testing (random example)
+            generateArray_2(); // For Testing (Foot example)
 
             ToolbarItem helpToolbarItem = new ToolbarItem
             {
@@ -208,14 +207,12 @@ namespace SlipNTrip.Pages
                 saveButton.IsVisible = false;
                 newTestButton.IsVisible = false;
                 deleteButton.IsVisible = true;
-                homeButton.IsVisible = false;
             }
             else
             {
                 saveButton.IsVisible = true;
                 newTestButton.IsVisible = true;
                 deleteButton.IsVisible = false;
-                homeButton.IsVisible = true;
             }
             
             Content = stackLayout;
@@ -277,10 +274,17 @@ namespace SlipNTrip.Pages
 
         async void HomeButtonCLicked(object sender, EventArgs e)
         {
-            bool response = await DisplayAlert("Return home", "Did you save the results?", "Yes", "No");
-            if (response)
+            if(buttonLayout)
             {
                 await Navigation.PushAsync(new HomePage());
+            }
+            else
+            {
+                bool response = await DisplayAlert("Return home", "Did you save the results?", "Yes", "No");
+                if (response)
+                {
+                    await Navigation.PushAsync(new HomePage());
+                }
             }
         }
 
@@ -307,8 +311,10 @@ namespace SlipNTrip.Pages
         }
 
         // For Testing
-        private void generateArray()
+        private void generateArray_1()
         {
+            startingLocationArray = new double[arraySize, arraySize];
+            endingLocationArray = new double[arraySize, arraySize];
             Random rnd = new Random();
             for (int x = 0; x < arraySize; x++)
             {
@@ -325,6 +331,41 @@ namespace SlipNTrip.Pages
                     endingLocationArray[x, y] = rnd.Next(0, 1000);
                 }
             }
+        }
+
+        private void generateArray_2()
+        {
+            // min tomato (Small amount of pressure) = 200
+            // min crimson = 400
+            // min firebrick = 600
+            // min dark red = 800
+            startingLocationArray = new double[,] { 
+                { 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100}, // Row #1
+                { 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100}, // Row #2
+                { 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100}, // Row #3
+                { 100, 100, 100, 100, 300, 700, 900, 100, 100, 100, 100}, // Row #4
+                { 100, 100, 100, 100, 500, 300, 900, 100, 100, 100, 100}, // Row #5
+                { 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100}, // Row #6
+                { 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100}, // Row #7
+                { 100, 100, 100, 100, 500, 300, 900, 100, 100, 100, 100}, // Row #8
+                { 100, 100, 100, 100, 300, 700, 900, 100, 100, 100, 100}, // Row #9
+                { 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100}, // Row #10
+                { 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100}  // Row #11
+            };
+
+            endingLocationArray = new double[,] {
+                { 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100}, // Row #1
+                { 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100}, // Row #2
+                { 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100}, // Row #3
+                { 100, 100, 100, 100, 300, 700, 900, 100, 100, 100, 100}, // Row #4
+                { 100, 100, 100, 100, 500, 300, 900, 100, 100, 100, 100}, // Row #5
+                { 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100}, // Row #6
+                { 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100}, // Row #7
+                { 100, 100, 500, 300, 900, 100, 100, 100, 100, 100, 100}, // Row #8
+                { 100, 100, 300, 700, 900, 100, 100, 100, 100, 100, 100}, // Row #9
+                { 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100}, // Row #10
+                { 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100}  // Row #11
+            };
         }
     }
 }

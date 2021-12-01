@@ -61,8 +61,9 @@ namespace SlipNTrip
 
         private void OnTextChanged(object sender, EventArgs e)
         {
-            //SearchBar searchBar = (SearchBar)sender;
-            //listView.ItemsSource = PatientList.FindByName(searchBar.Text);
+            var db = new SQLiteConnection(dbPath);
+            SearchBar searchBar = (SearchBar)sender;
+            PatientListView.ItemsSource = db.Table<Patient>().Where(x => x.PatientID.Contains(searchBar.Text)).ToList();
         }
 
         void helpButtonClicked(object sender, EventArgs e)

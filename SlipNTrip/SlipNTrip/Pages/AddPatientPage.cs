@@ -173,6 +173,7 @@ namespace SlipNTrip
                     await DisplayAlert("Hallo", "SUCCESS?", "Done");
                     await Navigation.PushAsync(new DatabaseQuery());
                 }*/
+
                 Patient patient = new Patient()
                 {
                     PatientID = patientIDEntry.Text,
