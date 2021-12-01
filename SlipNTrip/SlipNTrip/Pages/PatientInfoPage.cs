@@ -17,11 +17,6 @@ namespace SlipNTrip
 
         private Patient patient;
 
-        private int maxAge = 120;
-        private int maxHeight = 8;  //feet
-        private int maxWeight = 300; // lb
-        private int maxShoeSize = 15; //US Shoe Size
-
         private Label patientIDLabel;
         private Label nameLabel;
         private Label genderLabel;
@@ -44,6 +39,8 @@ namespace SlipNTrip
 
         public PatientInfoPage(Patient patient)
         {
+            AttributeValues attributeValues = new AttributeValues();
+
             this.patient = patient;
             this.Title = patient.PatientID + ": " + patient.Name;
 
@@ -58,85 +55,135 @@ namespace SlipNTrip
 
             StackLayout stackLayout = new StackLayout();
 
-            patientIDLabel = new Label();
-            patientIDLabel.Text = "Patient ID";
-            patientIDLabel.FontSize = 24;
+            patientIDLabel = new Label
+            {
+                Text = "Patient ID",
+                FontSize = attributeValues.getLabelFontSize()
+            };
             stackLayout.Children.Add(patientIDLabel);
-            patientIDEntry = new Entry();
-            patientIDEntry.Placeholder = "M_000";
-            patientIDEntry.Text = patient.PatientID;
+            patientIDEntry = new Entry
+            {
+                Placeholder = "M_000",
+                Text = patient.PatientID,
+                FontSize = attributeValues.getEntryFontSize()
+            };
             stackLayout.Children.Add(patientIDEntry);
 
-            nameLabel = new Label();
-            nameLabel.Text = "Name";
-            nameLabel.FontSize = 24;
+            nameLabel = new Label
+            {
+                Text = "Name",
+                FontSize = attributeValues.getLabelFontSize()
+            };
             stackLayout.Children.Add(nameLabel);
-            nameEntry = new Entry();
-            nameEntry.Placeholder = "Jane Doe";
-            nameEntry.Text = patient.Name;
+            nameEntry = new Entry
+            {
+                Placeholder = "Jane Doe",
+                Text = patient.Name,
+                FontSize = attributeValues.getEntryFontSize()
+            };
             stackLayout.Children.Add(nameEntry);
 
-            genderLabel = new Label();
-            genderLabel.Text = "Gender";
-            genderLabel.FontSize = 24;
+            genderLabel = new Label
+            {
+                Text = "Gender",
+                FontSize = attributeValues.getLabelFontSize()
+            };
             stackLayout.Children.Add(genderLabel);
-            genderEntry = new Entry();
-            genderEntry.Placeholder = "Female";
-            genderEntry.Text = patient.Gender;
+            genderEntry = new Entry
+            {
+                Placeholder = "Female",
+                Text = patient.Gender,
+                FontSize = attributeValues.getEntryFontSize()
+            };
             stackLayout.Children.Add(genderEntry);
 
-            ageLabel = new Label();
-            ageLabel.Text = "Age";
-            ageLabel.FontSize = 24;
+            ageLabel = new Label
+            {
+                Text = "Age",
+                FontSize = attributeValues.getLabelFontSize()
+            };
             stackLayout.Children.Add(ageLabel);
-            ageEntry = new Entry();
-            ageEntry.Keyboard = Keyboard.Numeric;
-            ageEntry.Placeholder = "23";
-            ageEntry.Text = patient.Age.ToString();
+            ageEntry = new Entry
+            {
+                Keyboard = Keyboard.Numeric,
+                Placeholder = "23",
+                Text = patient.Age.ToString(),
+                FontSize = attributeValues.getEntryFontSize()
+            };
             stackLayout.Children.Add(ageEntry);
 
-            heightLabel = new Label();
-            heightLabel.Text = "Height (ft.in)";
-            heightLabel.FontSize = 24;
+            heightLabel = new Label
+            {
+                Text = "Height (ft.in)",
+                FontSize = attributeValues.getLabelFontSize()
+            };
             stackLayout.Children.Add(heightLabel);
-            heightEntry = new Entry();
-            heightEntry.Keyboard = Keyboard.Numeric;
-            heightEntry.Placeholder = "5.5";
-            heightEntry.Text = patient.Height.ToString();
+            heightEntry = new Entry
+            {
+                Keyboard = Keyboard.Numeric,
+                Placeholder = "5.5",
+                Text = patient.Height.ToString(),
+                FontSize = attributeValues.getEntryFontSize()
+            };
             stackLayout.Children.Add(heightEntry);
 
-            weightLabel = new Label();
-            weightLabel.Text = "Weight (lb)";
-            weightLabel.FontSize = 24;
+            weightLabel = new Label
+            {
+                Text = "Weight (lb)",
+                FontSize = attributeValues.getLabelFontSize(),
+            };
             stackLayout.Children.Add(weightLabel);
-            weightEntry = new Entry();
-            weightEntry.Keyboard = Keyboard.Numeric;
-            weightEntry.Placeholder = "126";
-            weightEntry.Text = patient.Weight.ToString();
+            weightEntry = new Entry
+            {
+                Keyboard = Keyboard.Numeric,
+                Placeholder = "126",
+                Text = patient.Weight.ToString(),
+                FontSize = attributeValues.getEntryFontSize()
+            };
             stackLayout.Children.Add(weightEntry);
 
-            ShoeSizeLabel = new Label();
-            ShoeSizeLabel.Text = "Shoe Size";
-            ShoeSizeLabel.FontSize = 24;
+            ShoeSizeLabel = new Label
+            {
+                Text = "Shoe Size",
+                FontSize = attributeValues.getLabelFontSize()
+            };
             stackLayout.Children.Add(ShoeSizeLabel);
-            shoeSizeEntry = new Entry();
-            shoeSizeEntry.Keyboard = Keyboard.Numeric;
-            shoeSizeEntry.Placeholder = "7";
-            shoeSizeEntry.Text = patient.ShoeSize.ToString();
+            shoeSizeEntry = new Entry
+            {
+                Keyboard = Keyboard.Numeric,
+                Placeholder = "7",
+                Text = patient.ShoeSize.ToString(),
+                FontSize = attributeValues.getEntryFontSize()
+            };
             stackLayout.Children.Add(shoeSizeEntry);
 
-            updateButton = new Button();
-            updateButton.Text = "Update";
+            updateButton = new Button
+            {
+                Text = "Update",
+                FontSize = attributeValues.getLabelFontSize(),
+                BorderWidth = attributeValues.getBorderWidth(),
+                BorderColor = Color.DarkGray
+            };
             updateButton.Clicked += UpdateButtonClicked;
             stackLayout.Children.Add(updateButton);
 
-            testButton = new Button();
-            testButton.Text = "Test";
+            testButton = new Button
+            {
+                Text = "Test",
+                FontSize = attributeValues.getLabelFontSize(),
+                BorderWidth = attributeValues.getBorderWidth(),
+                BorderColor = Color.DarkGray
+            };
             testButton.Clicked += TestButtonClicked;
             stackLayout.Children.Add(testButton);
 
-            deleteButton = new Button();
-            deleteButton.Text = "Delete";
+            deleteButton = new Button
+            {
+                Text = "Delete",
+                FontSize = attributeValues.getLabelFontSize(),
+                BorderWidth = attributeValues.getBorderWidth(),
+                BorderColor = Color.DarkGray
+            };
             deleteButton.Clicked += DeleteButtonClicked;
             stackLayout.Children.Add(deleteButton);
 
@@ -201,7 +248,7 @@ namespace SlipNTrip
             {
                 dbPatient.Table<Patient>().Delete(x => x.ID == this.patient.ID);
                 dbTestResults.Table<TestResults>().Delete(x => x.PatientID == this.patient.ID);
-                await Navigation.PopAsync();
+                await Navigation.PushAsync(new ExistingPatientsPage());
             }
         }
 

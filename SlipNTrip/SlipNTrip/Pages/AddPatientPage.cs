@@ -12,9 +12,7 @@ namespace SlipNTrip
     public class AddPatientPage : ContentPage
     {
         string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "patients.db3");
-
-        private int buttonSize = 45;
-       
+        
         private Label patientIDLabel;
         private Label nameLabel;
         private Label genderLabel;
@@ -35,6 +33,8 @@ namespace SlipNTrip
 
         public AddPatientPage()
         {
+            AttributeValues attributeValues = new AttributeValues();
+
             this.Title = "Add Patient";
 
             ToolbarItem helpToolbarItem = new ToolbarItem
@@ -48,74 +48,112 @@ namespace SlipNTrip
 
             StackLayout stackLayout = new StackLayout();
 
-            patientIDLabel = new Label();
-            patientIDLabel.Text = "Patient ID";
-            patientIDLabel.FontSize = 24;
+            patientIDLabel = new Label 
+            { 
+                Text = "Patient ID",
+                FontSize = attributeValues.getLabelFontSize()
+            };
             stackLayout.Children.Add(patientIDLabel);
-            patientIDEntry = new Entry();
-            patientIDEntry.Placeholder = "M_000";
+            patientIDEntry = new Entry
+            {
+                Placeholder = "M_000",
+                FontSize = attributeValues.getEntryFontSize()
+            };
             stackLayout.Children.Add(patientIDEntry);
 
-            nameLabel = new Label();
-            nameLabel.Text = "Name";
-            nameLabel.FontSize = 24;
+            nameLabel = new Label
+            {
+                Text = "Name",
+                FontSize = attributeValues.getLabelFontSize()
+            };
             stackLayout.Children.Add(nameLabel);
-            nameEntry = new Entry();
-            nameEntry.Placeholder = "Jane Doe";
+            nameEntry = new Entry
+            {
+                Placeholder = "Jane Doe",
+                FontSize = attributeValues.getLabelFontSize()
+            };
             stackLayout.Children.Add(nameEntry);
 
-            genderLabel = new Label();
-            genderLabel.Text = "Gender";
-            genderLabel.FontSize = 24;
+            genderLabel = new Label
+            {
+                Text = "Gender",
+                FontSize = attributeValues.getLabelFontSize()
+            };
             stackLayout.Children.Add(genderLabel);
-            genderEntry = new Entry();
-            genderEntry.Placeholder = "Female";
+            genderEntry = new Entry
+            {
+                Placeholder = "Female",
+                FontSize = attributeValues.getEntryFontSize()
+            };
             stackLayout.Children.Add(genderEntry);
 
-            ageLabel = new Label();
-            ageLabel.Text = "Age";
-            ageLabel.FontSize = 24;
+            ageLabel = new Label
+            {
+                Text = "Age",
+                FontSize = attributeValues.getLabelFontSize()
+            };
             stackLayout.Children.Add(ageLabel);
-            ageEntry = new Entry();
-            ageEntry.Keyboard = Keyboard.Numeric;
-            ageEntry.Placeholder = "23";
+            ageEntry = new Entry
+            {
+                Keyboard = Keyboard.Numeric,
+                Placeholder = "24",
+                FontSize = attributeValues.getLabelFontSize()
+            };
             stackLayout.Children.Add(ageEntry);
 
-            heightLabel = new Label();
-            heightLabel.Text = "Height (ft.in)";
-            heightLabel.FontSize = 24;
+            heightLabel = new Label
+            {
+                Text = "Height (ft.in)",
+                FontSize = attributeValues.getLabelFontSize()
+            };
             stackLayout.Children.Add(heightLabel);
-            heightEntry = new Entry();
-            heightEntry.Keyboard = Keyboard.Numeric;
-            heightEntry.Placeholder = "5.5";
+            heightEntry = new Entry
+            {
+                Keyboard = Keyboard.Numeric,
+                Placeholder = "5.5",
+                FontSize = attributeValues.getLabelFontSize()
+            };
             stackLayout.Children.Add(heightEntry);
 
-            weightLabel = new Label();
-            weightLabel.Text = "Weight (lb)";
-            weightLabel.FontSize = 24;
+            weightLabel = new Label
+            {
+                Text = "Weight (lb)",
+                FontSize = attributeValues.getLabelFontSize()
+            };
             stackLayout.Children.Add(weightLabel);
-            weightEntry = new Entry();
-            weightEntry.Keyboard = Keyboard.Numeric;
-            weightEntry.Placeholder = "126";
+            weightEntry = new Entry
+            {
+                Keyboard = Keyboard.Numeric,
+                Placeholder = "130",
+                FontSize = attributeValues.getLabelFontSize()
+            };
             stackLayout.Children.Add(weightEntry);
 
-            ShoeSizeLabel = new Label();
-            ShoeSizeLabel.Text = "Shoe Size";
-            ShoeSizeLabel.FontSize = 24;
+            ShoeSizeLabel = new Label
+            {
+                Text = "Shoe Size",
+                FontSize = attributeValues.getLabelFontSize()
+            };
             stackLayout.Children.Add(ShoeSizeLabel);
-            shoeSizeEntry = new Entry();
-            shoeSizeEntry.Keyboard = Keyboard.Numeric;
-            shoeSizeEntry.Placeholder = "7";
+            shoeSizeEntry = new Entry
+            {
+                Keyboard = Keyboard.Numeric,
+                Placeholder = "7",
+                FontSize = attributeValues.getLabelFontSize()
+            };
             stackLayout.Children.Add(shoeSizeEntry);
 
-            saveButton = new Button();
-            saveButton.Text = "Save";
-            saveButton.FontSize = buttonSize;
+            saveButton = new Button
+            {
+                Text = "Save",
+                FontSize = attributeValues.getLabelFontSize(),
+                BorderWidth = attributeValues.getBorderWidth(),
+                BorderColor = Color.DarkGray
+            };
             saveButton.Clicked += OnButtonClicked;
             stackLayout.Children.Add(saveButton);
 
             Content = stackLayout;
-
         }
 
         async void OnButtonClicked(object sender, EventArgs e)
@@ -165,8 +203,8 @@ namespace SlipNTrip
                 else
                 {
                     db.Insert(patient);
-                    bool response = await DisplayAlert("Add Patient: Added", "Patient successfully added", "Done", "Next");
-                    if(!response)
+                    bool response = await DisplayAlert("Add Patient: Added", "Patient successfully added", "Next: Test Page", "Add another patient");
+                    if(response)
                     {
                         await Navigation.PushAsync(new TestPage(patient));
                     }

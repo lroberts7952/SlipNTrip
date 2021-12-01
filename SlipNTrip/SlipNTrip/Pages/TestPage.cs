@@ -15,7 +15,6 @@ namespace SlipNTrip
 
         private Patient patient;
         private TestResults testResults = new TestResults();
-        private Button newTest;
         private ListView testResultsListView;
         
         public TestPage(Patient patient)
@@ -25,11 +24,20 @@ namespace SlipNTrip
             this.patient = patient;
             this.Title = "Test";
 
+            ToolbarItem newTestToolbarItem = new ToolbarItem
+            {
+                Text = "+\t",
+                Order = ToolbarItemOrder.Primary,
+                Priority = 0
+            };
+            newTestToolbarItem.Clicked += newTestButtonClicked;
+            this.ToolbarItems.Add(newTestToolbarItem);
+
             ToolbarItem helpToolbarItem = new ToolbarItem
             {
                 Text = "?",
                 Order = ToolbarItemOrder.Primary,
-                Priority = 0
+                Priority = 1
             };
             helpToolbarItem.Clicked += helpButtonClicked;
             this.ToolbarItems.Add(helpToolbarItem);
@@ -40,17 +48,13 @@ namespace SlipNTrip
             //searchBar.TextChanged += OnTextChanged;
             stackLayout.Children.Add(searchBar);
 
-            newTest = new Button();
-            newTest.Text = "New Test";
-            newTest.Clicked += newTestButtonClicked;
-            stackLayout.Children.Add(newTest);
-
             var tableInfo = db.GetTableInfo("TestResults");
             if(tableInfo.Count > 0)
             {
                 testResultsListView = new ListView();
                 testResultsListView.ItemsSource = db.Table<TestResults>().Where(x => x.PatientID == patient.ID).ToList();
                 testResultsListView.ItemSelected += listView_ItemSelected;
+                testResultsListView.SeparatorColor = Color.DarkGray;    //IDK if needed
                 stackLayout.Children.Add(testResultsListView);
             }
             Content = stackLayout;

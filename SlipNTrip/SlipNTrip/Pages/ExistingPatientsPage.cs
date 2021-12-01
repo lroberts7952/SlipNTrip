@@ -45,7 +45,8 @@ namespace SlipNTrip
                 PatientListView = new ListView();
                 PatientListView.ItemsSource = db.Table<Patient>().OrderBy(x => x.PatientID).ToList();
                 PatientListView.ItemSelected += listView_ItemSelected;
-                PatientListView.BackgroundColor = Color.White;
+                PatientListView.BackgroundColor = Color.White; // Was needed for Android App
+                PatientListView.SeparatorColor = Color.DarkGray; //IDK if needed
                 stackLayout.Children.Add(PatientListView);
             }
             

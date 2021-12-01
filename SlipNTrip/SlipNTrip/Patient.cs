@@ -46,7 +46,7 @@ namespace SlipNTrip
             }
             else
             {
-                if (this.Height < 0 || this.Height > maxHeight || (int)(((decimal)maxHeight % 1) * 100) > 11)
+                if (this.Height < 0 || this.Height > maxHeight || (int)(((decimal)this.Height % 1) * 100) > 11)
                     return false;
             }
             return true;
@@ -54,15 +54,33 @@ namespace SlipNTrip
 
         public bool isWeightWithinRange()
         {
-            if (this.Weight < 0 || this.Weight > maxWeight || (int)(((decimal)this.Weight % 1) * 10) != 5)
-                return false;
+            int size = this.Weight.ToString().Length;
+            if (size <= 3)
+            {
+                if (this.Weight < 0 || this.Weight > maxWeight)
+                    return false;
+            }
+            else
+            {
+                if (this.Weight < 0 || this.Weight > maxWeight || ((int)(((decimal)this.Weight % 1) * 10) != 5 && (int)(((decimal)this.Weight % 1) * 10) != 0))
+                    return false;
+            }
             return true;
         }
 
         public bool isShoeSizeWithinRange()
         {
-            if (this.ShoeSize < 0 || this.ShoeSize > maxShoeSize || (int)(((decimal)this.ShoeSize % 1) * 10) != 5)
-                return false;
+            int size = this.ShoeSize.ToString().Length;
+            if(ShoeSize <= 2)
+            {
+                if (this.ShoeSize < 0 || this.ShoeSize > maxShoeSize)
+                    return false;
+            }
+            else
+            {
+                if (this.ShoeSize < 0 || this.ShoeSize > maxShoeSize || ((int)(((decimal)this.ShoeSize % 1) * 10) != 5 && (int)(((decimal)this.ShoeSize % 1) * 10) != 0))
+                    return false;
+            }
             return true;
 
         }

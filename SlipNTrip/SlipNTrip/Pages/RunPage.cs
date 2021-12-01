@@ -39,7 +39,7 @@ namespace SlipNTrip.Pages
             };
             emergancyStopButton.Clicked += emergencyStopClicked;
 
-            navigateToTestPage();
+            //navigateToTestPage();
             stackLayout.Children.Add(emergancyStopButton);
             Content = stackLayout;
         }

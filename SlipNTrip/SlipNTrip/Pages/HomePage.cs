@@ -10,7 +10,6 @@ namespace SlipNTrip
 {
     public class HomePage : ContentPage
     {
-        private Label welcomeMessage;
         private Label instructions;
         private Button addPatientButton;
         private Button existingPatientsButton;
@@ -19,6 +18,8 @@ namespace SlipNTrip
 
         public HomePage()
         {
+            AttributeValues attributeValues = new AttributeValues();
+
             ListofPatients listofPatients = new ListofPatients();
             listofPatients.GenerateListofPatients();
 
@@ -34,33 +35,51 @@ namespace SlipNTrip
             StackLayout stackLayout = new StackLayout();
             
             this.Title = "Home";
-
-            /*welcomeMessage = new Label();
-            welcomeMessage.Text = "Welcome to Defying Gravity's Slip N Trip App. The app accepts and store/access patient information, test results" +
-                "and input parameters required to control the Slip N Trip Device. ";*/
-            
-            instructions = new Label();
-            instructions.Text = "Select Option:";
-            instructions.FontSize = 24;
+            instructions = new Label
+            {
+                Text = "Select Option:",
+                FontSize = attributeValues.getLabelFontSize()
+            };
             stackLayout.Children.Add(instructions);
-            
-            addPatientButton = new Button();
-            addPatientButton.Text = "Add Patient";
+
+            addPatientButton = new Button
+            {
+                Text = "Add Patient",
+                FontSize = attributeValues.getLabelFontSize(),
+                BorderWidth = attributeValues.getBorderWidth(),
+                BorderColor = Color.DarkGray
+            };
             addPatientButton.Clicked += OnAddPatientButtonClicked;
             stackLayout.Children.Add(addPatientButton);
 
-            existingPatientsButton = new Button();
-            existingPatientsButton.Text = "Existing Patients";
+            existingPatientsButton = new Button
+            {
+                Text = "Existing Patients",
+                FontSize = attributeValues.getLabelFontSize(),
+                BorderWidth = attributeValues.getBorderWidth(),
+                BorderColor = Color.DarkGray
+            };
             existingPatientsButton.Clicked += OnExistingPatientsButtonClicked;
             stackLayout.Children.Add(existingPatientsButton);
 
-            deviceControlsButton = new Button();
-            deviceControlsButton.Text = "Device Controls";
+            deviceControlsButton = new Button()
+            {
+                Text = "Device Controls",
+                FontSize = attributeValues.getLabelFontSize(),
+                BorderWidth = attributeValues.getBorderWidth(),
+                BorderColor = Color.DarkGray
+            };
             deviceControlsButton.Clicked += OnDeviceControlsButtonClicked;
             stackLayout.Children.Add(deviceControlsButton);
 
-            logoutButton = new Button();
-            logoutButton.Text = "Logout/Exit";
+            logoutButton = new Button
+            {
+                Text = "Logout",
+                FontSize = attributeValues.getLabelFontSize(),
+                BorderWidth = attributeValues.getBorderWidth(),
+                BorderColor = Color.DarkGray
+            };
+            logoutButton.Clicked += OnLogoutButtonClicked;
             stackLayout.Children.Add(logoutButton);
 
             Content = stackLayout;
@@ -98,6 +117,11 @@ namespace SlipNTrip
                 "Existing Patients: View patients added into database\n" +
                 "Device Controls: Access the input parameters for device without needing a patient (Used for maintenance/testing)";
             DisplayAlert("Help - Home Page", helpMessage, "Done");
+        }
+
+        async void OnLogoutButtonClicked(object sender, EventArgs e)
+        {
+            await Navigation.PopToRootAsync();
         }
     }
 }

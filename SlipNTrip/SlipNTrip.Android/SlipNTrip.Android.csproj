@@ -54,6 +54,9 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Rg.Plugins.Popup">
+      <Version>2.0.0.14</Version>
+    </PackageReference>
     <PackageReference Include="SkiaSharp">
       <Version>2.80.3</Version>
     </PackageReference>
@@ -93,9 +96,6 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Three_Dots_Image.png" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\SlipNTrip\SlipNTrip.csproj">
       <Project>{442F0810-5B24-41DD-8D15-7FC71E1F536F}</Project>
       <Name>SlipNTrip</Name>
@@ -103,12 +103,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\Defying_Gravity_Logo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Three_Dots_Image2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Three_Dots_Image3.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\Emergency_Stop.png" />

@@ -17,26 +17,21 @@ namespace SlipNTrip
 
         private Label directionLabel;
         private Entry directionEntry;
-        private Picker directionPicker;
 
         private Label distanceLabel;
         private Entry distanceEntry;
-        private Picker distancePicker;
 
         private Label velocityLabel;
         private Entry velocityEntry;
-        private Picker velocityPicker;
 
         private Button runButton;
         private Button returnHome;
 
         public DeviceControlsPage(Patient patient)
         {
-            this.patient = patient; 
+            AttributeValues attributeValues = new AttributeValues();
 
-            string[] directionInputs = { "Forward", "Backward" };
-            string[] distanceInputs = { "3.0", "6.0", "9.0", "12.0", "15.0" };
-            string[] velocityInputs = { "15.0", "18.0", "21.0", "24.0", "27.0", "30.0", "33.0", "35.0" };
+            this.patient = patient; 
 
             this.Title = "Device Controls";
 
@@ -51,71 +46,77 @@ namespace SlipNTrip
 
             StackLayout stackLayout = new StackLayout();
 
-            testLabel = new Label();
-            testLabel.Text = "Test Name";
-            testLabel.FontSize = 24;
+            testLabel = new Label
+            {
+                Text = "Test Name",
+                FontSize = attributeValues.getLabelFontSize()
+            };
             stackLayout.Children.Add(testLabel);
-            testEntry = new Entry();
-            testEntry.Placeholder = "Test #1";
+            testEntry = new Entry
+            {
+                Placeholder = "Test #0",
+                FontSize = attributeValues.getEntryFontSize()
+            };
             stackLayout.Children.Add(testEntry);
 
-            directionLabel = new Label();
-            directionLabel.Text = "Direction";
-            directionLabel.FontSize = 24;
+            directionLabel = new Label
+            {
+                Text = "Direction",
+                FontSize = attributeValues.getLabelFontSize()
+            };
             stackLayout.Children.Add(directionLabel);
-            directionEntry = new Entry();
+            directionEntry = new Entry
+            {
+                Placeholder = "Forward/Backward",
+                FontSize = attributeValues.getEntryFontSize()
+            };
             stackLayout.Children.Add(directionEntry);
-            directionEntry.IsVisible = true;
-            directionPicker = new Picker();
-            directionPicker.Title = "Direction";
-            foreach(string direction in directionInputs)
-            {
-                directionPicker.Items.Add(direction);
-            }
-            stackLayout.Children.Add(directionPicker);
-            directionPicker.IsVisible = false;
 
-            distanceLabel = new Label();
-            distanceLabel.Text = "Distance";
-            distanceLabel.FontSize = 24;
+            distanceLabel = new Label
+            {
+                Text = "Distance",
+                FontSize = attributeValues.getLabelFontSize()
+            };
             stackLayout.Children.Add(distanceLabel);
-            distanceEntry = new Entry();
-            distanceEntry.Keyboard = Keyboard.Numeric;
+            distanceEntry = new Entry
+            {
+                Placeholder = "Select between 0 and 15 cm",
+                FontSize = attributeValues.getEntryFontSize(),
+                Keyboard = Keyboard.Numeric
+            };
             stackLayout.Children.Add(distanceEntry);
-            distanceEntry.IsVisible = true;
-            distancePicker = new Picker();
-            distancePicker.Title = "Distance";
-            foreach (string distance in distanceInputs)
-            {
-                distancePicker.Items.Add(distance);
-            }
-            stackLayout.Children.Add(distancePicker);
-            distancePicker.IsVisible = false;
 
-            velocityLabel = new Label();
-            velocityLabel.Text = "Velocity";
-            velocityLabel.FontSize = 24;
+            velocityLabel = new Label
+            {
+                Text = "Velocity",
+                FontSize = attributeValues.getLabelFontSize()
+            };
             stackLayout.Children.Add(velocityLabel);
-            velocityEntry = new Entry();
-            velocityEntry.Keyboard = Keyboard.Numeric;
-            stackLayout.Children.Add(velocityEntry);
-            velocityEntry.IsVisible = true;
-            velocityPicker = new Picker();
-            velocityPicker.Title = "Velocity";
-            foreach (string velocity in velocityInputs)
+            velocityEntry = new Entry
             {
-                velocityPicker.Items.Add(velocity);
-            }
-            stackLayout.Children.Add(velocityPicker);
-            velocityPicker.IsVisible = false;
+                Placeholder = "Select between 15 and 35 cm/s",
+                FontSize = attributeValues.getEntryFontSize(),
+                Keyboard = Keyboard.Numeric
+            };
+            stackLayout.Children.Add(velocityEntry);
 
-            runButton = new Button();
-            runButton.Text = "Run";
+            runButton = new Button
+            {
+                Text = "Run",
+                FontSize = attributeValues.getLabelFontSize(),
+                BorderColor = Color.DarkGray,
+                BorderWidth = attributeValues.getBorderWidth()
+            };
             runButton.Clicked += runButtonClicked;
             stackLayout.Children.Add(runButton);
 
-            returnHome = new Button();
-            returnHome.Text = "Return to Home Page";
+            returnHome = new Button
+            {
+                Text = "Return to Home Page",
+                FontSize = attributeValues.getLabelFontSize(),
+                BorderColor = Color.DarkGray,
+                BorderWidth = attributeValues.getBorderWidth()
+            };
             returnHome.Clicked += returnHomeButtonClicked;
             stackLayout.Children.Add(returnHome);
 
@@ -124,52 +125,31 @@ namespace SlipNTrip
 
         async void runButtonClicked(object sender, EventArgs e)
         {
-            if(distanceEntry.IsVisible)
+
+            if (!string.IsNullOrWhiteSpace(testEntry.Text) && !string.IsNullOrWhiteSpace(directionEntry.Text) &&
+                !string.IsNullOrWhiteSpace(distanceEntry.Text) && !string.IsNullOrWhiteSpace(velocityEntry.Text))
             {
-                if (!string.IsNullOrWhiteSpace(testEntry.Text) && !string.IsNullOrWhiteSpace(directionEntry.Text) && 
-                    !string.IsNullOrWhiteSpace(distanceEntry.Text) && !string.IsNullOrWhiteSpace(velocityEntry.Text))
+                if (directionEntry.Text != "forward" && directionEntry.Text != "Forward"
+                    && directionEntry.Text != "f" && directionEntry.Text != "F"
+                    && directionEntry.Text != "backward" && directionEntry.Text != "Backward"
+                    && directionEntry.Text != "b" && directionEntry.Text != "B")
                 {
-                    if(directionEntry.Text != "forward" && directionEntry.Text != "Forward" 
-                        && directionEntry.Text != "backward" && directionEntry.Text != "Backward")
-                    {
-                        await DisplayAlert("Device Controls Error", "Incorrect input for direction", "Done");
-                    }
-                    else if(double.Parse(distanceEntry.Text) < 0 || double.Parse(distanceEntry.Text) > 15)
-                    {
-                        await DisplayAlert("Device Controls Error", "Input for distance is out of range", "Done");
-                    }
-                    else if(double.Parse(velocityEntry.Text) < 15 || double.Parse(velocityEntry.Text) > 35)
-                    {
-                        await DisplayAlert("Device Controls Error", "Input for velocity is out of range", "Done");
-                    }
-                    else
-                    {
-                        TestResults testResults = new TestResults()
-                        {
-                            PatientName = patient.Name,
-                            PatientID = patient.ID,
-                            TestName = testEntry.Text,
-                            Date = DateTime.Now,
-                            Direction = directionEntry.Text,
-                            Distance = double.Parse(distanceEntry.Text),
-                            MotorSpeed = double.Parse(velocityEntry.Text),
-                            StepTaken = false,
-                            TimeBetweenStep = 0.0,
-                            DistanceBetweenStep = 0.0
-                        };
-                        await Navigation.PushAsync(new RunPage(patient, testResults, false));
-                    }
+                    await DisplayAlert("Device Controls Error", "Incorrect input for direction", "Done");
+                }
+                else if (double.Parse(distanceEntry.Text) < 0 || double.Parse(distanceEntry.Text) > 15)
+                {
+                    await DisplayAlert("Device Controls Error", "Input for distance is out of range", "Done");
+                }
+                else if (double.Parse(velocityEntry.Text) < 15 || double.Parse(velocityEntry.Text) > 35)
+                {
+                    await DisplayAlert("Device Controls Error", "Input for velocity is out of range", "Done");
                 }
                 else
-                    await DisplayAlert("Device Controls Error", "One or more fields missing information", "Done");
-            }
-            else
-            {
-                if (directionPicker.SelectedIndex != -1 && distancePicker.SelectedIndex != -1 && velocityPicker.SelectedIndex != -1)
                 {
                     TestResults testResults = new TestResults()
                     {
                         PatientName = patient.Name,
+                        PatientID = patient.ID,
                         TestName = testEntry.Text,
                         Date = DateTime.Now,
                         Direction = directionEntry.Text,
@@ -181,10 +161,11 @@ namespace SlipNTrip
                     };
                     await Navigation.PushAsync(new RunPage(patient, testResults, false));
                 }
-                else
-                    await DisplayAlert("Device Controls Error", "One or more fields missing information", "Done");
             }
+            else
+                await DisplayAlert("Device Controls Error", "One or more fields missing information", "Done");
         }
+          
 
         async void returnHomeButtonClicked(object sender, EventArgs e)
         {

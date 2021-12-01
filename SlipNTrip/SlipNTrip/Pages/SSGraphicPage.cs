@@ -12,6 +12,9 @@ namespace SlipNTrip.Pages
 {
     public class SSGraphicPage : ContentPage
     {
+        SKImageInfo info;
+        SKSurface surface;
+        SKCanvas canvas;
         private double[,] startingLocationArray;
         private double[,] endingLocationArray;
         private double[,] paintArray;
@@ -42,9 +45,9 @@ namespace SlipNTrip.Pages
 
             ToolbarItem locationToolbarItem = new ToolbarItem
             {
-                Text = "Patient's Location on Device",
-                //IconImageSource = ImageSource.FromFile("Three_Dots_Image3.png"),
+                Text = "Patient's Location on Device\t",
                 Order = ToolbarItemOrder.Primary,
+                
                 Priority = 0,
             };
             locationToolbarItem.Clicked += locationToolbarItemClicked;
@@ -66,19 +69,11 @@ namespace SlipNTrip.Pages
             Content = startingLocationCanvasView;
         }
 
-        void OnCanvasViewPaintSurface2(object sender, SKPaintSurfaceEventArgs args)
-        {
-            SKImageInfo info = args.Info;
-            SKSurface surface = args.Surface;
-            SKCanvas canvas = surface.Canvas;
-
-            canvas.Clear();
-        }
         void OnCanvasViewPaintSurface(object sender, SKPaintSurfaceEventArgs args)
         {
-            SKImageInfo info = args.Info;
-            SKSurface surface = args.Surface;
-            SKCanvas canvas = surface.Canvas;
+            info = args.Info;
+            surface = args.Surface;
+            canvas = surface.Canvas;
 
             canvas.Clear();
 
@@ -190,7 +185,7 @@ namespace SlipNTrip.Pages
                 "Meaning of Colors: \n" +
                 "\tDifferent shades of Red: Where pressure \n \t \tis applied; Darker the shade, the more \n \t \tpressure is applied\n" +
                 "\tGreen: No pressure is applied";
-            await DisplayAlert("Help - Patient's Location on Device", helpMessage, "Done");
+            await DisplayAlert("Help - Patient's Location on Device", helpMessage, "Done", "View Key (Visual");
         }
     }
 }

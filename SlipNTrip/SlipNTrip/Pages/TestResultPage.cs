@@ -46,6 +46,8 @@ namespace SlipNTrip.Pages
 
         public TestResultPage(Patient patient, TestResults testResults, Boolean buttonLayout)
         {
+            AttributeValues attributeValues = new AttributeValues();
+
             this.patient = patient;
             this.testResults = testResults;
             this.buttonLayout = buttonLayout;
@@ -68,106 +70,136 @@ namespace SlipNTrip.Pages
 
             patientID = new Label();
             patientID.Text = "Patient ID: " + patient.PatientID;
-            patientID.FontSize = 24;
+            patientID.FontSize = attributeValues.getLabelFontSize();
             stackLayout.Children.Add(patientID);
 
             patientName = new Label();
             patientName.Text = "Patient Name: " + patient.Name;
-            patientName.FontSize = 24;
+            patientName.FontSize = attributeValues.getLabelFontSize();
             stackLayout.Children.Add(patientName);
 
             testName = new Label();
             testName.Text = "Test Name: " + testResults.TestName;
-            testName.FontSize = 24;
+            testName.FontSize = attributeValues.getLabelFontSize();
             stackLayout.Children.Add(testName);
 
             testDate = new Label();
             testDate.Text = "Date: " + testResults.Date.ToString();
-            testDate.FontSize = 24;
+            testDate.FontSize = attributeValues.getLabelFontSize();
             stackLayout.Children.Add(testDate);
 
             patientGender = new Label();
             patientGender.Text = "Gender: " + patient.Gender;
-            patientGender.FontSize = 24;
+            patientGender.FontSize = attributeValues.getLabelFontSize();
             stackLayout.Children.Add(testDate);
 
             patientAge = new Label();
             patientAge.Text = "Age: " + patient.Age.ToString();
-            patientAge.FontSize = 24;
+            patientAge.FontSize = attributeValues.getLabelFontSize();
             stackLayout.Children.Add(patientAge);
 
             patientHeight = new Label();
             patientHeight.Text = "Height: " + patient.Height.ToString();
-            patientHeight.FontSize = 24;
+            patientHeight.FontSize = attributeValues.getLabelFontSize();
             stackLayout.Children.Add(patientHeight);
 
             patientWeight = new Label();
             patientWeight.Text = "Weight: " + patient.Weight.ToString();
-            patientWeight.FontSize = 24;
+            patientWeight.FontSize = attributeValues.getLabelFontSize();
             stackLayout.Children.Add(patientWeight);
 
             patientShoeSize = new Label();
             patientShoeSize.Text = "Shoe Size: " + patient.ShoeSize.ToString();
-            patientShoeSize.FontSize = 24;
+            patientShoeSize.FontSize = attributeValues.getLabelFontSize();
             stackLayout.Children.Add(patientShoeSize);
 
             deviceDirection = new Label();
             deviceDirection.Text = "Direction: " + testResults.Direction;
-            deviceDirection.FontSize = 24;
+            deviceDirection.FontSize = attributeValues.getLabelFontSize();
             stackLayout.Children.Add(deviceDirection);
 
             deviceDistance = new Label();
             deviceDistance.Text = "Distance: " + testResults.Distance.ToString();
-            deviceDistance.FontSize = 24;
+            deviceDistance.FontSize = attributeValues.getLabelFontSize();
             stackLayout.Children.Add(deviceDistance);
 
             deviceVelocity = new Label();
             deviceVelocity.Text = "Velocity/Speed: " + testResults.MotorSpeed.ToString();
-            deviceVelocity.FontSize = 24;
+            deviceVelocity.FontSize = attributeValues.getLabelFontSize();
             stackLayout.Children.Add(deviceVelocity);
 
             stepTaken = new Label();
             stepTaken.Text = "Was a step taken? " + testResults.WasAStepTaken();
-            stepTaken.FontSize = 24;
+            stepTaken.FontSize = attributeValues.getLabelFontSize();
             stackLayout.Children.Add(stepTaken);
 
             timeBetweenStep = new Label();
             timeBetweenStep.Text = "Time between steps: " + testResults.TimeBetweenStep.ToString();
-            timeBetweenStep.FontSize = 24;
+            timeBetweenStep.FontSize = attributeValues.getLabelFontSize();
             stackLayout.Children.Add(timeBetweenStep);
 
             distanceBetweenStep = new Label();
             distanceBetweenStep.Text = "Distance between steps: " + testResults.DistanceBetweenStep.ToString();
-            distanceBetweenStep.FontSize = 24;
+            distanceBetweenStep.FontSize = attributeValues.getLabelFontSize();
             stackLayout.Children.Add(distanceBetweenStep);
 
-            steppingSurfaceGraphicButton = new Button();
-            steppingSurfaceGraphicButton.Text = "View Patient's Location on Device";
+            steppingSurfaceGraphicButton = new Button
+            {
+                Text = "View Patient's Location on Device",
+                FontSize = attributeValues.getLabelFontSize(),
+                BorderColor = Color.DarkGray,
+                BorderWidth = attributeValues.getBorderWidth()
+            };
             steppingSurfaceGraphicButton.Clicked += steppingSurfaceGraphicButtonClicked;
             stackLayout.Children.Add(steppingSurfaceGraphicButton);
 
-            saveButton = new Button();
-            saveButton.Text = "Save";
+            saveButton = new Button
+            {
+                Text = "Save",
+                FontSize = attributeValues.getLabelFontSize(),
+                BorderColor = Color.DarkGray,
+                BorderWidth = attributeValues.getBorderWidth()
+            };
             saveButton.Clicked += SaveButtonCLicked;
             stackLayout.Children.Add(saveButton);
 
-            newTestButton = new Button();
-            newTestButton.Text = "New Test";
+            newTestButton = new Button
+            {
+                Text = "New Test",
+                FontSize = attributeValues.getLabelFontSize(),
+                BorderColor = Color.DarkGray,
+                BorderWidth = attributeValues.getBorderWidth()
+            };
             newTestButton.Clicked += NewTestButtonCLicked;
             stackLayout.Children.Add(newTestButton);
 
-            exportButton = new Button();
-            exportButton.Text = "Export";
+            exportButton = new Button
+            {
+                Text = "Export",
+                FontSize = attributeValues.getLabelFontSize(),
+                BorderColor = Color.DarkGray,
+                BorderWidth = attributeValues.getBorderWidth()
+            };
             exportButton.Clicked += ExportButtonCLicked;
             stackLayout.Children.Add(exportButton);
 
-            deleteButton = new Button();
-            deleteButton.Text = "Delete";
+            deleteButton = new Button
+            {
+                Text = "Delete",
+                FontSize = attributeValues.getLabelFontSize(),
+                BorderColor = Color.DarkGray,
+                BorderWidth = attributeValues.getBorderWidth()
+            };
             deleteButton.Clicked += DeleteButtonCLicked;
             stackLayout.Children.Add(deleteButton);
 
-            homeButton = new Button();
-            homeButton.Text = "Return to Home Page";
+            homeButton = new Button
+            {
+                Text = "Return to Home Page",
+                FontSize = attributeValues.getLabelFontSize(),
+                BorderColor = Color.DarkGray,
+                BorderWidth = attributeValues.getBorderWidth()
+            };
             homeButton.Clicked += HomeButtonCLicked;
             stackLayout.Children.Add(homeButton);
 

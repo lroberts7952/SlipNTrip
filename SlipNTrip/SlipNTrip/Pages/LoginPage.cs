@@ -18,35 +18,73 @@ namespace SlipNTrip
 {
     public class LoginPage : ContentPage
     {
+        private Label defyingGravityLabel;
+        private Label slipNTripLabel;
+        private Label yearLabel;
+        
+
         private Entry usernameEntry;
         private Entry passwordEntry;
         private Button loginButton;
 
         public LoginPage()
         {
+            AttributeValues attributeValues = new AttributeValues();
             StackLayout stackLayout = new StackLayout();
-            //this.Title = "Slip N Trip App";
+            
+
+            defyingGravityLabel = new Label
+            {
+                Text = "Defying Gravity",
+                FontSize = attributeValues.getLabelFontSize(),
+                HorizontalOptions = LayoutOptions.Center
+            };
+            stackLayout.Children.Add(defyingGravityLabel);
 
             var image = new Image {
                 Source = "Defying_Gravity_Logo.png"
             };
-
             stackLayout.Children.Add(image);
 
-            usernameEntry = new Entry();
-            usernameEntry.Placeholder = "Username";
-            usernameEntry.FontSize = 45;
+            slipNTripLabel = new Label
+            {
+                Text = "Slip N Trip V2",
+                FontSize = attributeValues.getLabelFontSize(),
+                HorizontalOptions = LayoutOptions.Center
+            };
+            stackLayout.Children.Add(slipNTripLabel);
+
+            yearLabel = new Label
+            {
+                Text = "2021",
+                FontSize = attributeValues.getLabelFontSize(),
+                HorizontalOptions = LayoutOptions.Center
+            };
+            stackLayout.Children.Add(yearLabel);
+
+            usernameEntry = new Entry
+            {
+                Placeholder = "Username",
+                FontSize = attributeValues.getEntryFontSize()
+            };
             stackLayout.Children.Add(usernameEntry);
 
-            passwordEntry = new Entry();
-            passwordEntry.Placeholder = "Password";
-            passwordEntry.FontSize = 45;
+            passwordEntry = new Entry
+            {
+                Placeholder = "Password",
+                FontSize = attributeValues.getEntryFontSize(),
+                IsPassword = true
+            };
             stackLayout.Children.Add(passwordEntry);
 
-            loginButton = new Button();
-            loginButton.Text = "Login";
-            loginButton.CornerRadius = 5;
-            loginButton.FontSize = 45;
+            loginButton = new Button
+            {
+                Text = "Login",
+                FontSize = attributeValues.getLabelFontSize(),
+                CornerRadius = 5,
+                BorderWidth = attributeValues.getBorderWidth(),
+                BorderColor = Color.DarkGray
+            };
             loginButton.Clicked += OnLoginButtonClicked;
             stackLayout.Children.Add(loginButton);
 
