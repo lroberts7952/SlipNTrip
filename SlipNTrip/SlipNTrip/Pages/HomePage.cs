@@ -121,7 +121,11 @@ namespace SlipNTrip
 
         async void OnLogoutButtonClicked(object sender, EventArgs e)
         {
-            await Navigation.PopToRootAsync();
+            bool response = await DisplayAlert("Home Page: Logging Out", "Are you sure you want to logout?", "Yes", "No");
+            if(response)
+            {
+                await Navigation.PopToRootAsync();
+            }
         }
     }
 }
