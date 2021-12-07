@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Xamarin.Essentials;
+using System.Net;
+using System.Net.Sockets;
 using Xamarin.Forms;
 
 namespace SlipNTrip.Pages
@@ -13,6 +15,7 @@ namespace SlipNTrip.Pages
         private Patient patient;
         private TestResults testResults;
         private bool buttonLayout;
+        private object _udpClient;
 
         public RunPage(Patient patient, TestResults testResults, bool buttonLayout)
         {
@@ -39,7 +42,7 @@ namespace SlipNTrip.Pages
             };
             emergancyStopButton.Clicked += emergencyStopClicked;
 
-            //navigateToTestPage();
+            navigateToTestPage();
             stackLayout.Children.Add(emergancyStopButton);
             Content = stackLayout;
         }
@@ -54,19 +57,41 @@ namespace SlipNTrip.Pages
 
         async void emergencyStopClicked(object sender, EventArgs e)
         {
+            using (var client = new UdpClient())
+            {
+                client.EnableBroadcast = true;
+                var endpoint = new IPEndPoint(IPAddress.Broadcast, 4210);
+                var message = Encoding.ASCII.GetBytes("-999");
+                await client.SendAsync(message, message.Length, endpoint);
+                client.Close();
+            }
             await DisplayAlert("Emergency Stop", "Emergency Stop Engaged", "Done");
-            await Navigation.PushAsync(new TestResultPage(patient, testResults, false));
-            //await Navigation.PushAsync(new DeviceControlsPage(patient));
+            //await Navigation.PushAsync(new TestResultPage(patient, testResults, false)); // For testing
+            await Navigation.PushAsync(new DeviceControlsPage(patient));
         }
         
         async void navigateToTestPage()
         {
-            int i = 0;
-            while(i < 1000)
+            UdpClient _udpClient = new UdpClient(4210);
+            string message;
+            do
             {
+                var result = await _udpClient.ReceiveAsync();
+                message = Encoding.ASCII.GetString(result.Buffer);
+                //Console.WriteLine(message);
+            } while (message.Length == 0);
 
+            if(message.Contains("-999"))
+            {
+                await DisplayAlert("Emergency Stop", "Manual Emergency Stop Engaged", "Done");
+                await Navigation.PushAsync(new DeviceControlsPage(patient));
             }
-            await Navigation.PushAsync(new TestResultPage(patient, testResults, false));
+            else
+            {
+                await Navigation.PushAsync(new TestResultPage(patient, testResults, false));
+            }
         }
+
+
     }
 }

@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 
 using Xamarin.Forms;
@@ -159,6 +161,15 @@ namespace SlipNTrip
                         TimeBetweenStep = 0.0,
                         DistanceBetweenStep = 0.0
                     };
+
+                    using (var client = new UdpClient())
+                    {
+                        client.EnableBroadcast = true;
+                        var endpoint = new IPEndPoint(IPAddress.Broadcast, 4210);
+                        var message = Encoding.ASCII.GetBytes(distanceEntry.Text);
+                        await client.SendAsync(message, message.Length, endpoint);
+                        client.Close();
+                    } 
                     await Navigation.PushAsync(new RunPage(patient, testResults, false));
                 }
             }
